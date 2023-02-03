@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+  app:
+    image: 'docker-spring-boot-postgres-4rd:latest'
+    build:
+      context: .
+    ports:
+      - "8091:8080"
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/compose-postgres
+      - SPRING_DATASOURCE_USERNAME=compose-postgres
+      - SPRING_DATASOURCE_PASSWORD=compose-postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_USER=compose-postgres
+      - POSTGRES_PASSWORD=compose-postgres
+
+
+##
+# Our application's name is app. It's the first of two services (lines 4-15):
+
+#  The Spring Boot Docker image has the name docker-spring-boot-postgres:latest (line 5). Docker builds that image from the Dockerfile in the current directory (lines 6-7)
+#  The container name is app (line 8). It depends on the db service (line 10). That's why it starts after the db container
+#  Our application uses the db PostgreSQL container as the data source (line 12). The database name, the user name, and the password are all compose-postgres (lines 12-14)
+#  Hibernate will automatically create or update any database tables needed (line 15)
+#
+# The PostgreSQL database has the name db and is the second service (lines 17-22):
+
+
+#  We use PostgreSQL 13.1 (line 18)
+#  The container name is db (line 19)
+#  The user name and password are both compose-postgres (lines 21-22)
