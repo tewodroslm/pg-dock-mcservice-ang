@@ -1,0 +1,19 @@
+
+spring:
+  application:
+    name: pg-dock
+  datasource:
+#    url: jdbc:postgresql://localhost:5432/pg-dock/compose-postgres
+    url: jdbc:postgresql://localhost:8088/compose-postgres
+    username: compose-postgres
+    password: compose-postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+
+#server:
+#  port: 8081
